@@ -35,9 +35,7 @@ export async function createEvent({ userId, event, path }: CreateEventParams) {
     const organizer = await User.findById(userId)
     if (!organizer) throw new Error('Organizer not found')
 
-    const newEvent = await Event.create(
-      { ...event, category: event.categoryId,
-         organizer: userId })
+    const newEvent = await Event.create({ ...event, category: event.categoryId, organizer: userId })
     revalidatePath(path)
 
     return JSON.parse(JSON.stringify(newEvent))
@@ -101,7 +99,11 @@ export async function getAllEvents({ query, limit = 6, page, category }: GetAllE
   try {
     await connectToDatabase()
 
-    const conditions = {}
+    const titleCondition = query ? { title: { $regex: query, $options: 'i' } } : {}
+    const categoryCondition = category ? await getCategoryByName(category) : null
+    const conditions = {
+      $and: [titleCondition, categoryCondition ? { category: categoryCondition._id } : {}],
+    }
 
     const skipAmount = (Number(page) - 1) * limit
     const eventsQuery = Event.find(conditions)
