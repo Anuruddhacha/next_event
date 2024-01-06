@@ -23,6 +23,10 @@ type CollectionProps = {
     collectionType,
     urlParamName,
   }: CollectionProps) => {
+
+
+
+
   return (
     <>
     {data.length > 0 ? (
@@ -37,8 +41,8 @@ type CollectionProps = {
                   
                  const hasOrderLInk = collectionType === 'Events_Organized';
                  const hidePrice = collectionType === 'My_Tickets'
-
-                 return (<li key={event.id} className='flex justify-center'>
+                
+                 return event &&(<li key={event.id} className='flex justify-center'>
 
                  <Card event={event}
                  hasOrderLink = {hasOrderLInk}

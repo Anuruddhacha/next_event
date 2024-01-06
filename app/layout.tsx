@@ -8,8 +8,8 @@ weight:['400','500','600','700'],
 variable:'--font-poppins'})
 
 export const metadata: Metadata = {
-  title: 'evently',
-  description: 'Platform for event management',
+  title: 'Harmony Hub',
+  description: 'Platform for music event management',
   icons:{
     icon:'/assets/images/logo.svg'
   }
